@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Réseau C14 - Quel Agent es-tu ?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 { color: #2c3e50; font-size: 1.5rem; margin-bottom: 25px; }
+        p { color: #7f8c8d; line-height: 1.6; }
+
+        .btn {
+            display: block;
+            background-color: #34495e;
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover { background-color: #e67e22; }
+
+        /* --- LOGIQUE SPAGHETTI (CSS) --- */
+
+        /* 1. On cache toutes les étapes et résultats par défaut */
+        .step, .result { display: none; }
+
+        /* 2. On affiche l'étape 1 au lancement */
+        #step-1 { display: block; }
+
+        /* 3. Navigation Branche B (Éclat) */
+        #q1-eclat:checked ~ #step-1 { display: none; }
+        #q1-eclat:checked ~ #step-2b { display: block; }
+
+        /* 4. Navigation vers la Scène (3E) */
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #step-2b { display: none; }
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #step-3e { display: block; }
+
+        /* 5. Navigation vers le Chantier (3F) */
+        #q1-eclat:checked ~ #q2b-chantier:checked ~ #step-2b { display: none; }
+        #q1-eclat:checked ~ #q2b-chantier:checked ~ #step-3f { display: block; }
+
+        /* 6. RÉSULTAT CARDAMOME (Le raccourci de la question 3F) */
+        #q1-eclat:checked ~ #q2b-chantier:checked ~ #q3f-pause:checked ~ #step-3f { display: none; }
+        #q1-eclat:checked ~ #q2b-chantier:checked ~ #q3f-pause:checked ~ #res-cardamome { display: block; }
+
+        /* 7. RÉSULTAT CADENCE (Ton profil : Branche E -> Choix K) */
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #step-3e { display: none; }
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #step-4k { display: block; }
+        
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #q4k-voix:checked ~ #step-4k { display: none; }
+        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #q4k-voix:checked ~ #res-cadence { display: block; }
+
+        /* Ajoute tes autres branches (Ombre) sur le même modèle... */
+
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>🕵️‍♂️ Mission : Le Dossier Fantôme</h1>
+
+    <input type="radio" name="q1" id="q1-ombre" hidden>
+    <input type="radio" name="q1" id="q1-eclat" hidden>
+
+    <input type="radio" name="q2b" id="q2b-scene" hidden>
+    <input type="radio" name="q2b" id="q2b-chantier" hidden>
+
+    <input type="radio" name="q3e" id="q3e-parle" hidden>
+    <input type="radio" name="q3e" id="q3e-acro" hidden>
+
+    <input type="radio" name="q3f" id="q3f-outil" hidden>
+    <input type="radio" name="q3f" id="q3f-pause" hidden>
+
+    <input type="radio" name="q4k" id="q4k-voix" hidden>
+    <input type="radio" name="q4k" id="q4k-sign" hidden>
+
+    <div class="step" id="step-1">
+        <p>L'alerte vient de tomber ! Un mystérieux dossier a été volé. Quelle est ta première réaction ?</p>
+        <label for="q1-ombre" class="btn">Analyser les plans (Ombre)</label>
+        <label for="q1-eclat" class="btn">Aller sur le terrain (Éclat)</label>
+    </div>
+
+    <div class="step" id="step-2b">
+        <p>Le musée est bondé de visiteurs et de gardes. Comment entres-tu ?</p>
+        <label for="q2b-scene" class="btn">Faire une performance pour captiver la foule</label>
+        <label for="q2b-chantier" class="btn">Passer par l'échafaudage du chantier</label>
+    </div>
+
+    <div class="step" id="step-3e">
+        <p>Un garde te barre la route vers la salle du dossier. Comment le neutralises-tu ?</p>
+        <label for="q3e-parle" class="btn">Je l'embrouille en lui parlant</label>
+        <label for="q3e-acro" class="btn">Je tente une acrobatie au-dessus de lui</label>
+    </div>
+
+    <div class="step" id="step-3f">
+        <p>Le couloir est bloqué par des décombres. Que fais-tu ?</p>
+        <label for="q3f-outil" class="btn">Je sors mes outils pour analyser le mur</label>
+        <label for="q3f-pause" class="btn">Je vois un panier de provisions... pause goûter !</label>
+    </div>
+
+    <div class="step" id="step-4k">
+        <p>Le garde te demande tes papiers. Comment gagnes-tu sa confiance ?</p>
+        <label for="q4k-voix" class="btn">Je lui parle avec une voix mélodieuse et assurée</label>
+        <label for="q4k-sign" class="btn">Je lui montre un faux laissez-passer</label>
+    </div>
+
+    <div class="result" id="res-cadence">
+        <h2 style="color: #e67e22;">✨ Tu es l'Agent CADENCE ! ✨</h2>
+        <p>Le coucou charmeur. Tu courtises avec élégance au rythme de ta parole.</p>
+    </div>
+
+    <div class="result" id="res-cardamome">
+        <h2 style="color: #e67e22;">✨ Tu es l'Agent CARDAMOME ! ✨</h2>
+        <p>Le panda gourmet. Pourquoi stresser quand on peut manger ?</p>
+    </div>
+
+    <p style="margin-top: 30px; font-size: 0.8rem;">Réseau C14 - Section Jeunesse</p>
+</div>
+
+</body>
+</html>
