@@ -3,156 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Réseau C14 - Recrutement</title>
+    <title>Réseau C14 - Dossier d'Identification</title>
     <style>
-        /* --- DESIGN GLOBAL --- */
-        body { font-family: 'Courier New', Courier, monospace; background: #1a1a1a; color: #e0e0e0; display: flex; justify-content: center; padding: 20px; }
-        .quiz-container { background: #262626; padding: 30px; border: 2px solid #e67e22; border-radius: 10px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 0 20px rgba(230, 126, 34, 0.2); }
-        h1 { color: #e67e22; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 25px; }
-        
-        /* --- BOUTONS --- */
-        .btn { display: block; background: #333; color: #e67e22; padding: 15px; margin: 10px 0; border: 1px solid #e67e22; border-radius: 5px; cursor: pointer; transition: 0.3s; text-decoration: none; }
-        .btn:hover { background: #e67e22; color: #fff; box-shadow: 0 0 10px #e67e22; }
+        /* --- STYLE "DOSSIER CONFIDENTIEL" --- */
+        body { 
+            background-color: #e5e5e5; /* Fond gris neutre */
+            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 20px 20px;
+            font-family: 'Courier New', Courier, monospace; 
+            color: #2d2d2d; 
+            display: flex; 
+            justify-content: center; 
+            padding: 20px; 
+        }
 
-        /* --- LOGIQUE SPAGHETTI (CSS) --- */
-        .step, .result { display: none; } /* Cache tout */
-        #step-1 { display: block; } /* Affiche Q1 au départ */
+        .folder {
+            background-color: #e8dcc4; /* Couleur papier Kraft / Vieille chemise */
+            max-width: 650px;
+            width: 100%;
+            padding: 40px;
+            border-left: 15px solid #c4a484; /* Bordure dossier */
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+            position: relative;
+            min-height: 500px;
+        }
 
-        /* Masquage des étapes précédentes au clic */
+        /* En-tête type dossier officiel */
+        .header {
+            border-bottom: 2px solid #2d2d2d;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 { margin: 0; font-size: 1.2rem; text-transform: uppercase; }
+        .confidential-stamp {
+            color: #b22222;
+            border: 3px solid #b22222;
+            padding: 5px 10px;
+            font-weight: bold;
+            transform: rotate(-5deg);
+            text-transform: uppercase;
+        }
+
+        p { font-size: 1.1rem; line-height: 1.4; font-weight: bold; }
+
+        /* --- BOUTONS / CHOIX --- */
+        .btn {
+            display: block;
+            background: transparent;
+            color: #2d2d2d;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #2d2d2d;
+            cursor: pointer;
+            text-align: left;
+            font-weight: bold;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .btn:hover {
+            background: rgba(0,0,0,0.05);
+            padding-left: 20px;
+        }
+
+        .btn::before { content: "[ ] "; }
+
+        /* --- LOGIQUE DU QUIZ --- */
+        .step, .result { display: none; }
+        #step-1 { display: block; }
+
+        /* Masquage automatique au clic */
         input:checked ~ .step { display: none; }
 
-        /* BRANCHE A (OMBRE) */
-        #q1-a:checked ~ #step-2a { display: block; }
-        #q1-a:checked ~ #q2a-1:checked ~ #step-3c { display: block; }
-        #q1-a:checked ~ #q2a-2:checked ~ #step-3d { display: block; }
-        #q1-a:checked ~ #q2a-1:checked ~ #q3c-1:checked ~ #step-4g { display: block; }
-        #q1-a:checked ~ #q2a-1:checked ~ #q3c-2:checked ~ #step-4h { display: block; }
-        #q1-a:checked ~ #q2a-2:checked ~ #q3d-1:checked ~ #step-4i { display: block; }
-        #q1-a:checked ~ #q2a-2:checked ~ #q3d-2:checked ~ #step-4j { display: block; }
+        /* Affichage des étapes selon le tableau Excel */
+        #q1-a:checked ~ #step-2a, #q1-b:checked ~ #step-2b { display: block; }
+        #q2a-1:checked ~ #step-3c, #q2a-2:checked ~ #step-3d { display: block; }
+        #q2b-1:checked ~ #step-3e, #q2b-2:checked ~ #step-3f { display: block; }
+        #q3c-1:checked ~ #step-4g, #q3c-2:checked ~ #step-4h { display: block; }
+        #q3d-1:checked ~ #step-4i, #q3d-2:checked ~ #step-4j { display: block; }
+        #q3e-1:checked ~ #step-4k, #q3e-2:checked ~ #step-4l { display: block; }
+        #q3f-1:checked ~ #step-4m { display: block; }
 
-        /* BRANCHE B (ECLAT) */
-        #q1-b:checked ~ #step-2b { display: block; }
-        #q1-b:checked ~ #q2b-1:checked ~ #step-3e { display: block; }
-        #q1-b:checked ~ #q2b-2:checked ~ #step-3f { display: block; }
-        #q1-b:checked ~ #q2b-1:checked ~ #q3e-1:checked ~ #step-4k { display: block; }
-        #q1-b:checked ~ #q2b-1:checked ~ #q3e-2:checked ~ #step-4l { display: block; }
-        #q1-b:checked ~ #q2b-2:checked ~ #q3f-1:checked ~ #step-4m { display: block; }
-
-        /* RESULTATS FINAUX (14 AGENTS) */
-        #q3c-1:checked ~ #q4g-1:checked ~ #res-carbone { display: block; }
-        #q3c-1:checked ~ #q4g-2:checked ~ #res-cinetique { display: block; }
-        #q3c-2:checked ~ #q4h-1:checked ~ #res-corpus { display: block; }
-        #q3c-2:checked ~ #q4h-2:checked ~ #res-cinquecento { display: block; }
-        #q3d-1:checked ~ #q4i-1:checked ~ #res-cronos { display: block; }
-        #q3d-1:checked ~ #q4i-2:checked ~ #res-cachemire { display: block; }
-        #q3d-2:checked ~ #q4j-1:checked ~ #res-chrysopee { display: block; }
-        #q3d-2:checked ~ #q4j-2:checked ~ #res-cuivre-a { display: block; }
-        
-        #q3e-1:checked ~ #q4k-1:checked ~ #res-cuivre-b { display: block; }
-        #q3e-1:checked ~ #q4k-2:checked ~ #res-cadence { display: block; }
-        #q3e-2:checked ~ #q4l-1:checked ~ #res-catharsis { display: block; }
-        #q3e-2:checked ~ #q4l-2:checked ~ #res-cabriole { display: block; }
-        
-        #q3f-1:checked ~ #q4m-1:checked ~ #res-cariatide { display: block; }
-        #q3f-1:checked ~ #q4m-2:checked ~ #res-colombage { display: block; }
+        /* Résultats Finaux */
+        #q4g-1:checked ~ #res-carbone, #q4g-2:checked ~ #res-cinetique { display: block; }
+        #q4h-1:checked ~ #res-corpus, #q4h-2:checked ~ #res-cinquecento { display: block; }
+        #q4i-1:checked ~ #res-cronos, #q4i-2:checked ~ #res-cachemire { display: block; }
+        #q4j-1:checked ~ #res-chrysopee, #q4j-2:checked ~ #res-cuivre { display: block; }
+        #q4k-1:checked ~ #res-cuivre, #q4k-2:checked ~ #res-cadence { display: block; }
+        #q4l-1:checked ~ #res-catharsis, #q4l-2:checked ~ #res-cabriole { display: block; }
+        #q4m-1:checked ~ #res-cariatide, #q4m-2:checked ~ #res-colombage { display: block; }
         #q3f-2:checked ~ #res-cardamome { display: block; }
 
-        .result { border: 2px dashed #e67e22; padding: 20px; background: #333; }
-        .result h2 { color: #fff; margin-top: 0; }
+        /* --- STYLE CARTE AGENT (Le Résultat) --- */
+        .result {
+            border: 4px solid #2d2d2d;
+            padding: 20px;
+            background: #fdfaf0; /* Papier blanc cassé */
+            position: relative;
+        }
+
+        .result h2 { color: #b22222; text-transform: uppercase; margin-top: 0; }
+        .result::after {
+            content: "RÉSEAU C14 - VALIDÉ";
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.3;
+            font-size: 0.7rem;
+            transform: rotate(-15deg);
+        }
+
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <h1>Réseau C14 : Identification</h1>
+<div class="folder">
+    <div class="header">
+        <h1>Réseau C14 // Dossier #0804</h1>
+        <div class="confidential-stamp">Confidentiel</div>
+    </div>
 
     <input type="radio" name="q1" id="q1-a" hidden> <input type="radio" name="q1" id="q1-b" hidden>
     <input type="radio" name="q2a" id="q2a-1" hidden> <input type="radio" name="q2a" id="q2a-2" hidden>
-               <input type="radio" name="q2b" id="q2b-1" hidden> <input type="radio" name="q2b" id="q2b-2" hidden>
+    <input type="radio" name="q2b" id="q2b-1" hidden> <input type="radio" name="q2b" id="q2b-2" hidden>
     <input type="radio" name="q3c" id="q3c-1" hidden> <input type="radio" name="q3c" id="q3c-2" hidden>
-               <input type="radio" name="q3d" id="q3d-1" hidden> <input type="radio" name="q3d" id="q3d-2" hidden>
-               <input type="radio" name="q3e" id="q3e-1" hidden> <input type="radio" name="q3e" id="q3e-2" hidden>
-               <input type="radio" name="q3f" id="q3f-1" hidden> <input type="radio" name="q3f" id="q3f-2" hidden>
+    <input type="radio" name="q3d" id="q3d-1" hidden> <input type="radio" name="q3d" id="q3d-2" hidden>
+    <input type="radio" name="q3e" id="q3e-1" hidden> <input type="radio" name="q3e" id="q3e-2" hidden>
+    <input type="radio" name="q3f" id="q3f-1" hidden> <input type="radio" name="q3f" id="q3f-2" hidden>
     <input type="radio" name="q4g" id="q4g-1" hidden> <input type="radio" name="q4g" id="q4g-2" hidden>
-               <input type="radio" name="q4h" id="q4h-1" hidden> <input type="radio" name="q4h" id="q4h-2" hidden>
-               <input type="radio" name="q4i" id="q4i-1" hidden> <input type="radio" name="q4i" id="q4i-2" hidden>
-               <input type="radio" name="q4j" id="q4j-1" hidden> <input type="radio" name="q4j" id="q4j-2" hidden>
-               <input type="radio" name="q4k" id="q4k-1" hidden> <input type="radio" name="q4k" id="q4k-2" hidden>
-               <input type="radio" name="q4l" id="q4l-1" hidden> <input type="radio" name="q4l" id="q4l-2" hidden>
-               <input type="radio" name="q4m" id="q4m-1" hidden> <input type="radio" name="q4m" id="q4m-2" hidden>
+    <input type="radio" name="q4h" id="q4h-1" hidden> <input type="radio" name="q4h" id="q4h-2" hidden>
+    <input type="radio" name="q4i" id="q4i-1" hidden> <input type="radio" name="q4i" id="q4i-2" hidden>
+    <input type="radio" name="q4j" id="q4j-1" hidden> <input type="radio" name="q4j" id="q4j-2" hidden>
+    <input type="radio" name="q4k" id="q4k-1" hidden> <input type="radio" name="q4k" id="q4k-2" hidden>
+    <input type="radio" name="q4l" id="q4l-1" hidden> <input type="radio" name="q4l" id="q4l-2" hidden>
+    <input type="radio" name="q4m" id="q4m-1" hidden> <input type="radio" name="q4m" id="q4m-2" hidden>
 
     <div class="step" id="step-1">
-        <p>L'alerte tombe ! Quel est ton premier réflexe ?</p>
-        <label for="q1-a" class="btn">Analyser les plans en secret (Ombre)</label>
-        <label for="q1-b" class="btn">Partir sur le terrain interroger (Éclat)</label>
+        <p>PROCÉDURE D'URGENCE : Le dossier fantôme a été dérobé. Quelle est votre approche prioritaire ?</p>
+        <label for="q1-a" class="btn">ANALYSE : Je me concentre sur les plans et les archives.</label>
+        <label for="q1-b" class="btn">ACTION : Je pars immédiatement sur le terrain.</label>
     </div>
 
     <div class="step" id="step-2a">
-        <p>La porte secrète est verrouillée. Que fais-tu ?</p>
-        <label for="q2a-1" class="btn">Chercher un levier ou un code caché</label>
-        <label for="q2a-2" class="btn">Forcer le mécanisme avec mes outils</label>
+        <p>ACCÈS BLOQUÉ : La porte est verrouillée.</p>
+        <label for="q2a-1" class="btn">Rechercher un mécanisme de déverrouillage caché.</label>
+        <label for="q2a-2" class="btn">Forcer le verrou avec les outils de précision.</label>
     </div>
 
     <div class="step" id="step-2b">
-        <p>Le musée est bondé de gardes. Comment entres-tu ?</p>
-        <label for="q2b-1" class="btn">Faire une performance pour captiver la foule</label>
-        <label for="q2b-2" class="btn">Passer par l'échafaudage du chantier</label>
+        <p>SURVEILLANCE : Le musée est rempli de gardes.</p>
+        <label for="q2b-1" class="btn">Utiliser une diversion spectaculaire pour passer.</label>
+        <label for="q2b-2" class="btn">Infiltration par la zone de chantier en hauteur.</label>
     </div>
 
     <div class="step" id="step-3c">
-        <p>Un bruit suspect dans les archives !</p>
-        <label for="q3c-1" class="btn">Se cacher dans le noir pour suivre le suspect</label>
-        <label for="q3c-2" class="btn">Examiner les parchemins pour trouver un indice</label>
+        <p>ARCHIVES : Un mouvement est détecté dans l'ombre.</p>
+        <label for="q3c-1" class="btn">Disparaître dans le noir pour suivre la cible.</label>
+        <label for="q3c-2" class="btn">Sécuriser les documents sur le bureau.</label>
     </div>
+
     <div class="step" id="step-3d">
-        <p>Le mécanisme est cassé. Quelle est ta méthode ?</p>
-        <label for="q3d-1" class="btn">Réparer la pièce avec précision</label>
-        <label for="q3d-2" class="btn">Utiliser une potion ou un faux badge</label>
+        <p>TECHNIQUE : Le système central est défaillant.</p>
+        <label for="q3d-1" class="btn">Réparer la carte mère manuellement.</label>
+        <label for="q3d-2" class="btn">Injecter un sérum de piratage chimique.</label>
     </div>
 
     <div class="step" id="step-3e">
-        <p>Un garde te barre la route. Neutralisation ?</p>
-        <label for="q3e-1" class="btn">L'embrouiller par la parole</label>
-        <label for="q3e-2" class="btn">Faire une acrobatie pour passer au-dessus</label>
+        <p>FACE-À-FACE : Un garde vous bloque le passage.</p>
+        <label for="q3e-1" class="btn">Neutraliser par la ruse verbale.</label>
+        <label for="q3e-2" class="btn">Franchir l'obstacle par une manoeuvre acrobatique.</label>
     </div>
+
     <div class="step" id="step-3f">
-        <p>Le couloir est bloqué par des décombres.</p>
-        <label for="q3f-1" class="btn">Analyser la structure pour passer</label>
-        <label for="q3f-2" class="btn">Pause gourmande avant de continuer !</label>
+        <p>OBSTACLE : Un mur de décombres obstrue le couloir.</p>
+        <label for="q3f-1" class="btn">Étudier la structure pour créer une brèche.</label>
+        <label for="q3f-2" class="btn">Pause logistique (Ravitaillement indispensable).</label>
     </div>
 
-    <div class="step" id="step-4g"><p>Dernier choix : Ta plus grande qualité ?</p>
-        <label for="q4g-1" class="btn">La patience infinie</label><label for="q4g-2" class="btn">L'art de l'illusion</label></div>
-    <div class="step" id="step-4h"><p>Comment lis-tu un secret ?</p>
-        <label for="q4h-1" class="btn">En déchiffrant les mots</label><label for="q4h-2" class="btn">En observant les images</label></div>
-    <div class="step" id="step-4i"><p>Ton style de création ?</p>
-        <label for="q4i-1" class="btn">L'invention mathématique</label><label for="q4i-2" class="btn">Le tissage de la soie</label></div>
-    <div class="step" id="step-4j"><p>Ta spécialité secrète ?</p>
-        <label for="q4j-1" class="btn">Les parfums et potions</label><label for="q4j-2" class="btn">La ruse et les faux papiers</label></div>
-    <div class="step" id="step-4k"><p>Comment convaincs-tu le garde ?</p>
-        <label for="q4k-1" class="btn">Une signature imitée</label><label for="q4k-2" class="btn">Une voix envoûtante</label></div>
-    <div class="step" id="step-4l"><p>L'alarme sonne ! Fuite ?</p>
-        <label for="q4l-1" class="btn">Se déguiser instantanément</label><label for="q4l-2" class="btn">Disparaître avec agilité</label></div>
-    <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p>
-        <label for="q4m-1" class="btn">En sculptant la pierre</label><label for="q4m-2" class="btn">En réorganisant l'espace</label></div>
+    <div class="step" id="step-4g"><p>APTITUDE :</p><label for="q4g-1" class="btn">Patience stratégique</label><label for="q4g-2" class="btn">Vitesse d'exécution</label></div>
+    <div class="step" id="step-4h"><p>ANALYSE :</p><label for="q4h-1" class="btn">Lecture des codes</label><label for="q4h-2" class="btn">Mémoire visuelle</label></div>
+    <div class="step" id="step-4i"><p>MÉTIER :</p><label for="q4i-1" class="btn">Ingénierie</label><label for="q4i-2" class="btn">Artisanat fin</label></div>
+    <div class="step" id="step-4j"><p>OUTIL :</p><label for="q4j-1" class="btn">Chimie</label><label for="q4j-2" class="btn">Contrefaçon</label></div>
+    <div class="step" id="step-4k"><p>DÉCISION :</p><label for="q4k-1" class="btn">Document falsifié</label><label for="q4k-2" class="btn">Charme vocal</label></div>
+    <div class="step" id="step-4l"><p>ÉVASION :</p><label for="q4l-1" class="btn">Changement d'identité</label><label for="q4l-2" class="btn">Agilité pure</label></div>
+    <div class="step" id="step-4m"><p>TRAVAIL :</p><label for="q4m-1" class="btn">Sculpture</label><label for="q4m-2" class="btn">Architecture</label></div>
 
-    <div class="result" id="res-carbone"><h2>Agent CARBONE</h2><p>La chouette stratège.</p></div>
-    <div class="result" id="res-cinetique"><h2>Agent CINÉTIQUE</h2><p>La chauve-souris des images.</p></div>
-    <div class="result" id="res-corpus"><h2>Agent CORPUS</h2><p>La loutre savante.</p></div>
-    <div class="result" id="res-cinquecento"><h2>Agent CINQUECENTO</h2><p>L'aigle photographe.</p></div>
-    <div class="result" id="res-cronos"><h2>Agent CRONOS</h2><p>Le renard inventeur.</p></div>
-    <div class="result" id="res-cachemire"><h2>Agent CACHEMIRE</h2><p>La tarentule couturière.</p></div>
-    <div class="result" id="res-chrysopee"><h2>Agent CHRYSOPÉE</h2><p>L'abeille des essences.</p></div>
-    <div class="result" id="res-cuivre-a"><h2>Agent CUIVRE</h2><p>Le caméléon faussaire.</p></div>
-    <div class="result" id="res-cuivre-b"><h2>Agent CUIVRE</h2><p>Le caméléon infiltré.</p></div>
-    <div class="result" id="res-cadence"><h2>Agent CADENCE</h2><p>Le coucou mélodieux.</p></div>
-    <div class="result" id="res-catharsis"><h2>Agent CATHARSIS</h2><p>Le serpent caméléon.</p></div>
-    <div class="result" id="res-cabriole"><h2>Agent CABRIOLE</h2><p>La raie manta gracieuse.</p></div>
-    <div class="result" id="res-cariatide"><h2>Agent CARIATIDE</h2><p>Le pivert sculpteur.</p></div>
-    <div class="result" id="res-colombage"><h2>Agent COLOMBAGE</h2><p>La souris architecte.</p></div>
-    <div class="result" id="res-cardamome"><h2>Agent CARDAMOME</h2><p>Le panda gourmet. (Fin de mission !)</p></div>
+    <div class="result" id="res-carbone"><h2>Agent CARBONE</h2><p>La chouette stratège du Réseau.</p></div>
+    <div class="result" id="res-cinetique"><h2>Agent CINÉTIQUE</h2><p>Le maître des ombres et de l'image.</p></div>
+    <div class="result" id="res-corpus"><h2>Agent CORPUS</h2><p>La mémoire vivante des archives.</p></div>
+    <div class="result" id="res-cinquecento"><h2>Agent CINQUECENTO</h2><p>L'oeil d'aigle de la section photo.</p></div>
+    <div class="result" id="res-cronos"><h2>Agent CRONOS</h2><p>Le génie des mécanismes anciens.</p></div>
+    <div class="result" id="res-cachemire"><h2>Agent CACHEMIRE</h2><p>La précision du fil et de l'aiguille.</p></div>
+    <div class="result" id="res-chrysopee"><h2>Agent CHRYSOPÉE</h2><p>L'alchimiste des parfums secrets.</p></div>
+    <div class="result" id="res-cuivre"><h2>Agent CUIVRE</h2><p>Le faussaire caméléon.</p></div>
+    <div class="result" id="res-cadence"><h2>Agent CADENCE</h2><p>Le charmeur au rythme de la parole.</p></div>
+    <div class="result" id="res-catharsis"><h2>Agent CATHARSIS</h2><p>L'expert en déguisement total.</p></div>
+    <div class="result" id="res-cabriole"><h2>Agent CABRIOLE</h2><p>L'agilité de la raie manta.</p></div>
+    <div class="result" id="res-cariatide"><h2>Agent CARIATIDE</h2><p>Le pivert sculpteur de pierre.</p></div>
+    <div class="result" id="res-colombage"><h2>Agent COLOMBAGE</h2><p>Le bâtisseur et l'architecte.</p></div>
+    <div class="result" id="res-cardamome"><h2>Agent CARDAMOME</h2><p>Le panda gourmet (Opération Gourmande terminée).</p></div>
 
 </div>
+
 </body>
 </html>
