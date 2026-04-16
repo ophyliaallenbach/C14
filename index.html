@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réseau C14 // Dossier Officiel</title>
     <style>
-        /* style */
+        /* Style */
         body { 
             background-color: #d1d1d1; 
             background-image: radial-gradient(#afafaf 1px, transparent 1px);
@@ -67,11 +67,9 @@
         .btn:hover { background: #2d2d2d; color: #e8dcc4; }
         .btn::before { content: "- [ ] "; }
 
-        /* logique de masquage verifier si ça marche */
+        /* affichage & cacher l'etape d'avant */
         .step, .result { display: none; }
         #step-1 { display: block; }
-
-        /* Quand on répond à une question, on cache l'étape précédente */
         input[name="q1"]:checked ~ .folder #step-1,
         input[name="q2a"]:checked ~ .folder #step-2a,
         input[name="q2b"]:checked ~ .folder #step-2b,
@@ -79,9 +77,9 @@
         input[name="q3d"]:checked ~ .folder #step-3d,
         input[name="q3e"]:checked ~ .folder #step-3e,
         input[name="q3f"]:checked ~ .folder #step-3f,
-        input[id^="q4"]:checked ~ .folder .step { display: none !important; }
+        input[name^="q4"]:checked ~ .folder .step { display: none !important; }
 
-        /* Affichage de l'étape suivante */
+        /* Afficher l'étape suivante */
         #q1-a:checked ~ .folder #step-2a, #q1-b:checked ~ .folder #step-2b { display: block; }
         #q2a-c:checked ~ .folder #step-3c, #q2a-d:checked ~ .folder #step-3d { display: block; }
         #q2b-e:checked ~ .folder #step-3e, #q2b-f:checked ~ .folder #step-3f { display: block; }
@@ -90,7 +88,7 @@
         #q3e-k:checked ~ .folder #step-4k, #q3e-l:checked ~ .folder #step-4l { display: block; }
         #q3f-m:checked ~ .folder #step-4m { display: block; }
 
-        /* Affichage des résultats */
+        /* Résultats */
         #q4-g1:checked ~ .folder #res-carbone, #q4-g2:checked ~ .folder #res-cinetique { display: block; }
         #q4-h1:checked ~ .folder #res-corpus, #q4-h2:checked ~ .folder #res-cinquecento { display: block; }
         #q4-i1:checked ~ .folder #res-cronos, #q4-i2:checked ~ .folder #res-cachemire { display: block; }
@@ -100,34 +98,24 @@
         #q4-m1:checked ~ .folder #res-cariatide, #q4-m2:checked ~ .folder #res-colombage { display: block; }
         #q3f-pause:checked ~ .folder #res-cardamome { display: block; }
 
-        /* STYLE DES FICHES AGENTS */
+        /* style du resultat */
         .result { border: 5px double #2d2d2d; padding: 30px; background: #fdfaf0; box-shadow: 5px 5px 0px rgba(0,0,0,0.1); }
         .result h2 { color: #b22222; text-transform: uppercase; margin-top: 0; border-bottom: 2px solid #b22222; padding-bottom: 10px; }
         .animal-meta { font-style: italic; color: #555; margin-bottom: 15px; font-weight: bold; display: block; }
         .description-text { font-weight: normal; font-size: 1rem; line-height: 1.5; text-align: justify; }
 
-        .reset-container {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        .reset-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            transition: transform 0.3s;
-        }
+        /* bouton logo */
+        .reset-container { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .reset-btn { background: none; border: none; cursor: pointer; transition: transform 0.3s; }
         .reset-btn:hover { transform: scale(1.1); }
         .reset-btn img { width: 80px; height: 80px; }
-        .reset-text { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #777; }
+        .reset-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #777; font-weight: bold; }
 
     </style>
 </head>
 <body>
 
+<form style="display:contents;">
     <input type="radio" name="q1" id="q1-a" hidden> <input type="radio" name="q1" id="q1-b" hidden>
     <input type="radio" name="q2a" id="q2a-c" hidden> <input type="radio" name="q2a" id="q2a-d" hidden>
     <input type="radio" name="q2b" id="q2b-e" hidden> <input type="radio" name="q2b" id="q2b-f" hidden>
@@ -162,78 +150,63 @@
         </div>
 
         <div class="step" id="step-3c">
-            <p>Le passage débouche sur une pièce sombre, remplie de trésors et de vieux dossiers. Soudain, tu entends un bruit de pas au bout du couloir ! Le voleur n'est pas loin. Que décides-tu ?</p>
+            <p>Le passage débouche sur une pièce sombre. Soudain, tu entends un bruit de pas au bout du couloir ! Le voleur n'est pas loin. Que décides-tu ?</p>
             <label for="q3c-g" class="btn">Je m'efface dans l'obscurité pour suivre l'ombre du suspect sans faire un bruit.</label>
             <label for="q3c-h" class="btn">Je m'arrête une seconde pour examiner ce qu'il y a sur le bureau : un manuscrit ancien.</label>
         </div>
 
         <div class="step" id="step-3d">
-            <p>Le verrou a fondu, mais derrière la porte, un dernier système de sécurité bloque l'accès au coffre : un mécanisme complexe avec des pièces manquantes. Le temps presse, que décides-tu d'utiliser ?</p>
+            <p>Le verrou a fondu, mais un dernier système de sécurité bloque l'accès au coffre. Le temps presse, que décides-tu d'utiliser ?</p>
             <label for="q3d-i" class="btn">Mes mains et mes outils de précision. Je vais réparer la pièce manquante.</label>
             <label for="q3d-j" class="btn">Mes produits secrets et mon talent d'imitateur. Je vais tromper le système.</label>
         </div>
 
         <div class="step" id="step-2b">
-            <p>Tu es arrivé devant le musée, mais il y a un monde fou et des gardes partout. Pour entrer sans attirer les soupçons sur ta mission, quelle est ta tactique ?</p>
+            <p>Tu es arrivé devant le musée, mais il y a un monde fou et des gardes partout. Quelle est ta tactique ?</p>
             <label for="q2b-e" class="btn">Je monte sur une estrade et je commence une performance pour captiver la foule.</label>
             <label for="q2b-f" class="btn">Je repère une zone en travaux avec un échafaudage pour entrer par les hauteurs.</label>
         </div>
 
         <div class="step" id="step-3e">
-            <p>Tu es à l'intérieur, mais un garde te barre la route vers la salle du dossier. Il te regarde fixement. Comment le neutralises-tu ?</p>
+            <p>Un garde te barre la route vers la salle du dossier. Comment le neutralises-tu ?</p>
             <label for="q3e-k" class="btn">Je l'embrouille en lui parlant pour le déstabiliser.</label>
             <label for="q3e-l" class="btn">Je fais une acrobatie pour passer au-dessus de lui.</label>
         </div>
 
         <div class="step" id="step-3f">
-            <p>Le couloir est bloqué par des décombres ou un mur en construction. Que fais-tu ?</p>
+            <p>Le couloir est bloqué par des décombres. Que fais-tu ?</p>
             <label for="q3f-m" class="btn">Je sors mes outils pour analyser la structure du bâtiment.</label>
             <label for="q3f-pause" class="btn">Je vois un panier de provisions... une pause gourmande avant de continuer !</label>
         </div>
 
-        <div class="step" id="step-4g"><p>Tu es juste derrière le suspect, caché dans le noir complet. Il s'apprête à sortir du musée avec le dossier volé. C'est le moment d'agir !</p>
-            <label for="q4-g1" class="btn">Je reste parfaitement calme et j'attends le moment idéal pour bondir.</label>
-            <label for="q4-g2" class="btn">J'allume une petite lumière et j'utilise mes miroirs pour projeter mon ombre.</label></div>
-        
-        <div class="step" id="step-4h"><p>Tu as le document sous les yeux, mais il est écrit dans une langue mystérieuse avec des dessins étranges. Sur quoi se concentre ton regard ?</p>
-            <label for="q4-h1" class="btn">Sur les mots et les textes. Je cherche dans ma mémoire tout ce que j'ai lu.</label>
-            <label for="q4-h2" class="btn">Sur les couleurs et les petits détails du dessin.</label></div>
+        <div class="step" id="step-4g"><p>Ta plus grande force ?</p><label for="q4-g1" class="btn">La patience infinie</label><label for="q4-g2" class="btn">L'art de l'illusion</label></div>
+        <div class="step" id="step-4h"><p>Comment déchiffres-tu un secret ?</p><label for="q4-h1" class="btn">Les mots écrits</label><label for="q4-h2" class="btn">Les images et couleurs</label></div>
+        <div class="step" id="step-4i"><p>Ton style de création ?</p><label for="q4-i1" class="btn">Invention mathématique</label><label for="q4-i2" class="btn">Travail de la soie</label></div>
+        <div class="step" id="step-4j"><p>Ta spécialité ?</p><label for="q4-j1" class="btn">Potions et essences</label><label for="q4-j2" class="btn">Contrefaçon</label></div>
+        <div class="step" id="step-4k"><p>Le garde demande tes papiers :</p><label for="q4-k1" class="btn">Signature imitée</label><label for="q4-k2" class="btn">Voix assurée</label></div>
+        <div class="step" id="step-4l"><p>Comment disparais-tu ?</p><label for="q4-l1" class="btn">Changer d'identité</label><label for="q4-l2" class="btn">Agilité pure</label></div>
+        <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p><label for="q4-m1" class="btn">En sculptant la pierre</label><label for="q4-m2" class="btn">En construisant un passage</label></div>
 
-        <div class="step" id="step-4i"><p>Tu as la pièce en main, mais elle doit être ajustée au millimètre près pour ne pas déclencher l'alarme. Comment termines-tu le travail ?</p>
-            <label for="q4-i1" class="btn">J'ajuste le mécanisme en calculant l'angle parfait grâce au nombre d'or.</label>
-            <label for="q4-i2" class="btn">J'utilise mes doigts avec une rapidité extrême, comme si je maniais un fil de soie.</label></div>
+        <div class="result" id="res-carbone">
+            <h2>Agent CARBONE</h2><span class="animal-meta">Chouette.</span>
+            <div class="description-text">Tête pensante du Réseau C14. Stratège hors pair.</div>
+            <div class="reset-container"><button type="reset" class="reset-btn"><img src="https://static.wixstatic.com/media/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png/v1/fill/w_208,h_208,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png"></button><span class="reset-text">Nouvelle Mission</span></div>
+        </div>
 
-        <div class="step" id="step-4j"><p>Le coffre est ouvert ! Mais une odeur suspecte s'en échappe et des gardes approchent. Quel est ton dernier tour dans ton sac ?</p>
-            <label for="q4-j1" class="btn">Je prépare instantanément un parfum délicat pour endormir les gardes.</label>
-            <label for="q4-j2" class="btn">Je remplace le vrai dossier par un faux document imité à la perfection.</label></div>
+        <div class="result" id="res-cadence">
+            <h2>Agent CADENCE</h2><span class="animal-meta">Coucou.</span>
+            <div class="description-text">Élégant et charmeur. Il courtise au rythme de sa parole et de ses chansons.</div>
+            <div class="reset-container"><button type="reset" class="reset-btn"><img src="https://static.wixstatic.com/media/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png/v1/fill/w_208,h_208,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png"></button><span class="reset-text">Nouvelle Mission</span></div>
+        </div>
 
-        <div class="step" id="step-4k"><p>Le garde commence à avoir des doutes, il te demande de lui montrer tes papiers pour entrer. Comment gagnes-tu sa confiance ?</p>
-            <label for="q4-k1" class="btn">Je lui sors un laissez-passer officiel avec une signature imitée.</label>
-            <label for="q4-k2" class="btn">Je lui parle avec une voix mélodieuse et un rythme élégant.</label></div>
+        <div class="result" id="res-cardamome">
+            <h2>Agent CARDAMOME</h2><span class="animal-meta">Panda.</span>
+            <div class="description-text">Gourmet généreux. Expert des saveurs du monde.</div>
+            <div class="reset-container"><button type="reset" class="reset-btn"><img src="https://static.wixstatic.com/media/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png/v1/fill/w_208,h_208,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ddeabd_296c02cb0183452e953c89c99e405975~mv2.png"></button><span class="reset-text">Nouvelle Mission</span></div>
+        </div>
 
-        <div class="step" id="step-4l"><p>Tu as réussi ton acrobatie et tu as le dossier en main, mais l'alarme se déclenche ! Les gardes arrivent de partout. Comment disparais-tu ?</p>
-            <label for="q4-l1" class="btn">Une perruque, une moustache et un changement de voix : je deviens quelqu'un d'autre.</label>
-            <label for="q4-l2" class="btn">Je réalise un mouvement d'une souplesse incroyable pour me fondre dans les ombres.</label></div>
+        </div>
+</form>
 
-        <div class="step" id="step-4m"><p>Grâce à tes outils, tu as repéré une zone fragile dans le mur qui bloque le couloir. Mais pour passer, il faut agir vite avant que les gardes ne fassent leur ronde. Quel est ton style ?</p>
-            <label for="q4-m1" class="btn">Je prends mon burin et mon marteau : je taille une ouverture parfaite.</label>
-            <label for="q4-m2" class="btn">Je récupère les planches de bois et les décombres pour construire une passerelle.</label></div>
-
-        <div class="result" id="res-carbone"><h2>Agent CARBONE</h2><span class="animal-meta">Animal totem : Chouette.</span><div class="description-text">Tête pensante du Réseau. Elle connaît son environnement par cœur et avance ses pions avec stratégie. Elle attend dans l’ombre, puis au moment idéal elle fond sur sa proie. Clac.</div></div>
-        <div class="result" id="res-cinetique"><h2>Agent CINÉTIQUE</h2><span class="animal-meta">Animal totem : Chauve-souris.</span><div class="description-text">Son milieu naturel est la nuit. Elle inventa les premières images animées avec des jeux de miroirs. Elle sait surgir lorsqu’on ne s’y attend pas.</div></div>
-        <div class="result" id="res-corpus"><h2>Agent CORPUS</h2><span class="animal-meta">Animal totem : Loutre.</span><div class="description-text">Elle aime naviguer dans les bibliothèques. Sa sagesse n’a d’égal que ses connaissances encyclopédiques.</div></div>
-        <div class="result" id="res-cinquecento"><h2>Agent CINQUECENTO</h2><span class="animal-meta">Animal totem : Aigle.</span><div class="description-text">Ses yeux saisissent ombres, lumière et couleurs avec une précision photographique. Elle reproduit les images avec une rapidité fascinante.</div></div>
-        <div class="result" id="res-cronos"><h2>Agent CRONOS</h2><span class="animal-meta">Animal totem : Renard.</span><div class="description-text">Malin comme jamais. Il invente des machines en appliquant le nombre d’or à toutes ses créations.</div></div>
-        <div class="result" id="res-cachemire"><h2>Agent CACHEMIRE</h2><span class="animal-meta">Animal totem : Tarentule.</span><div class="description-text">Elle manie le fil à coudre avec une précision hors norme pour créer les vêtements des reines.</div></div>
-        <div class="result" id="res-chrysopee"><h2>Agent CHRYSOPÉE</h2><span class="animal-meta">Animal totem : Abeille.</span><div class="description-text">Il prélève l’essence des fleurs pour en faire des parfums délicieux ou mortels. Doux mais sachant piquer.</div></div>
-        <div class="result" id="res-cuivre"><h2>Agent CUIVRE</h2><span class="animal-meta">Animal totem : Caméléon.</span><div class="description-text">Disciple de Gutenberg et faussaire de génie. Imiter les signatures et les cachets officiels est sa passion.</div></div>
-        <div class="result" id="res-cadence"><h2>Agent CADENCE</h2><span class="animal-meta">Animal totem : Coucou.</span><div class="description-text">Élégant et charmeur, il courtise au rythme de sa parole. Il a l’oreille absolue et sait imiter n’importe quel chant d’oiseau. (C'est vous !)</div></div>
-        <div class="result" id="res-catharsis"><h2>Agent CATHARSIS</h2><span class="animal-meta">Animal totem : Serpent.</span><div class="description-text">Sa capacité à muer est infinie. Elle sait se faire passer pour n’importe qui grâce à ses déguisements.</div></div>
-        <div class="result" id="res-cabriole"><h2>Agent CABRIOLE</h2><span class="animal-meta">Animal totem : Raie Manta.</span><div class="description-text">Gracieux et calme, il sait se fondre dans le décor. Son corps possède une souplesse sans comparaison.</div></div>
-        <div class="result" id="res-cariatide"><h2>Agent CARIATIDE</h2><span class="animal-meta">Animal totem : Pivert.</span><div class="description-text">Elle aime creuser et donner forme à la pierre. Ses mains sont solides et elle est d'un perfectionnisme rare.</div></div>
-        <div class="result" id="res-colombage"><h2>Agent COLOMBAGE</h2><span class="animal-meta">Animal totem : Souris.</span><div class="description-text">Frétillant et enthousiaste, il est l’un des plus brillants architectes de son époque.</div></div>
-        <div class="result" id="res-cardamome"><h2>Agent CARDAMOME</h2><span class="animal-meta">Animal totem : Panda.</span><div class="description-text">Sympathique et bon vivant. Expert pour identifier toutes les saveurs. Pause gourmande méritée !</div></div>
-
-    </div>
 </body>
 </html>
