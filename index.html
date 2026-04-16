@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réseau C14 // Dossier Officiel</title>
     <style>
+
         body { 
             background-color: #d1d1d1; 
             background-image: radial-gradient(#afafaf 1px, transparent 1px);
@@ -14,6 +15,7 @@
             display: flex; 
             justify-content: center; 
             padding: 20px; 
+            margin: 0;
         }
 
         .folder {
@@ -25,6 +27,21 @@
             box-shadow: 15px 15px 0px rgba(0,0,0,0.2);
             position: relative;
             min-height: 600px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .folder { 
+                padding: 25px 15px 25px 20px; 
+                border-left: 8px solid #c4a484; 
+                min-height: 95vh; 
+            }
+            .header h1 { font-size: 0.85rem; }
+            .stamp { font-size: 0.8rem; padding: 3px 8px; }
+            p { font-size: 1rem; }
+            .btn { font-size: 0.9rem; padding: 12px; }
+            .result h2 { font-size: 1.2rem; }
         }
 
         .header {
@@ -46,6 +63,7 @@
             transform: rotate(-8deg);
             text-transform: uppercase;
             font-size: 1.1rem;
+            white-space: nowrap;
         }
 
         p { font-size: 1.1rem; line-height: 1.4; font-weight: bold; margin-bottom: 25px; }
@@ -65,11 +83,10 @@
 
         .btn:hover { background: #2d2d2d; color: #e8dcc4; }
         .btn::before { content: "- [ ] "; }
-        
+
         .step, .result { display: none; }
         #step-1 { display: block; }
 
-        /* Cacher l'étape précédente dès qu'on coche une réponse */
         input[name="q1"]:checked ~ .folder #step-1,
         input[name="q2a"]:checked ~ .folder #step-2a,
         input[name="q2b"]:checked ~ .folder #step-2b,
@@ -79,7 +96,6 @@
         input[name="q3f"]:checked ~ .folder #step-3f,
         input[id^="q4"]:checked ~ .folder .step { display: none !important; }
 
-        /* Afficher l'étape suivante */
         #q1-a:checked ~ .folder #step-2a, #q1-b:checked ~ .folder #step-2b { display: block; }
         #q2a-c:checked ~ .folder #step-3c, #q2a-d:checked ~ .folder #step-3d { display: block; }
         #q2b-e:checked ~ .folder #step-3e, #q2b-f:checked ~ .folder #step-3f { display: block; }
@@ -88,7 +104,7 @@
         #q3e-k:checked ~ .folder #step-4k, #q3e-l:checked ~ .folder #step-4l { display: block; }
         #q3f-m:checked ~ .folder #step-4m { display: block; }
 
-        /* Résultats */
+        /* RÉSULTATS */
         #q4-g1:checked ~ .folder #res-carbone, #q4-g2:checked ~ .folder #res-cinetique { display: block; }
         #q4-h1:checked ~ .folder #res-corpus, #q4-h2:checked ~ .folder #res-cinquecento { display: block; }
         #q4-i1:checked ~ .folder #res-cronos, #q4-i2:checked ~ .folder #res-cachemire { display: block; }
@@ -98,26 +114,13 @@
         #q4-m1:checked ~ .folder #res-cariatide, #q4-m2:checked ~ .folder #res-colombage { display: block; }
         #q3f-pause:checked ~ .folder #res-cardamome { display: block; }
 
-        /* STYLE DES RESULTATS */
-        .result { border: 5px double #2d2d2d; padding: 30px; background: #fdfaf0; box-shadow: 5px 5px 0px rgba(0,0,0,0.1); }
+        .result { border: 5px double #2d2d2d; padding: 25px; background: #fdfaf0; box-shadow: 5px 5px 0px rgba(0,0,0,0.1); }
         .result h2 { color: #b22222; text-transform: uppercase; margin-top: 0; border-bottom: 2px solid #b22222; padding-bottom: 10px; }
         .animal-meta { font-style: italic; color: #555; margin-bottom: 15px; font-weight: bold; display: block; }
         .description-text { font-weight: normal; font-size: 1rem; line-height: 1.5; text-align: justify; }
 
-        /* BOUTON RETOUR */
         .reset-container { margin-top: 30px; text-align: center; }
-        .reset-link { 
-            background: none; 
-            border: 1px solid #777; 
-            color: #777; 
-            padding: 8px 15px; 
-            cursor: pointer; 
-            font-family: inherit; 
-            text-transform: uppercase; 
-            font-size: 0.7rem; 
-            font-weight: bold;
-            transition: 0.2s;
-        }
+        .reset-link { background: none; border: 1px solid #777; color: #777; padding: 10px 20px; cursor: pointer; font-family: inherit; text-transform: uppercase; font-size: 0.75rem; font-weight: bold; transition: 0.2s; }
         .reset-link:hover { background: #777; color: #fdfaf0; }
 
     </style>
@@ -183,22 +186,42 @@
         </div>
 
         <div class="step" id="step-3f">
-            <p>Le couloir est bloqué par des décombres. Quelle est l'option ?</p>
+            <p>Le couloir est bloqué par des décombres ou un mur en construction. Que fais-tu ?</p>
             <label for="q3f-m" class="btn">Je sors mes outils pour analyser la structure du bâtiment.</label>
-            <label for="q3f-pause" class="btn">Une pause gourmande avant de continuer !</label>
+            <label for="q3f-pause" class="btn">Je vois un panier de provisions... une pause gourmande avant de continuer !</label>
         </div>
 
-        <div class="step" id="step-4g"><p>Ta plus grande force ?</p><label for="q4-g1" class="btn">La patience infinie</label><label for="q4-g2" class="btn">L'art de l'illusion</label></div>
-        <div class="step" id="step-4h"><p>Comment déchiffres-tu un secret ?</p><label for="q4-h1" class="btn">En déchiffrant les mots écrits</label><label for="q4-h2" class="btn">En observant les images et couleurs</label></div>
-        <div class="step" id="step-4i"><p>Ton style de création ?</p><label for="q4-i1" class="btn">L'invention mathématique</label><label for="q4-i2" class="btn">Le travail fin de la soie</label></div>
-        <div class="step" id="step-4j"><p>Ta spécialité ?</p><label for="q4-j1" class="btn">Les potions et essences</label><label for="q4-j2" class="btn">La falsification de documents</label></div>
-        <div class="step" id="step-4k"><p>Le garde demande tes papiers :</p><label for="q4-k1" class="btn">Signature imitée</label><label for="q4-k2" class="btn">Voix mélodieuse</label></div>
-        <div class="step" id="step-4l"><p>L'alarme sonne ! Comment disparais-tu ?</p><label for="q4-l1" class="btn">En changeant d'identité</label><label for="q4-l2" class="btn">En me fondant dans les ombres</label></div>
-        <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p><label for="q4-m1" class="btn">En sculptant la pierre</label><label for="q4-m2" class="btn">En construisant un passage</label></div>
+        <div class="step" id="step-4g"><p>Tu es juste derrière le suspect, caché dans le noir complet. Il s'apprête à sortir du musée avec le dossier volé. C'est le moment d'agir !</p>
+            <label for="q4-g1" class="btn">Je reste parfaitement calme et j'attends le moment idéal pour bondir.</label>
+            <label for="q4-g2" class="btn">J'allume une petite lumière et j'utilise mes miroirs pour projeter mon ombre.</label></div>
+        
+        <div class="step" id="step-4h"><p>Tu as le document sous les yeux, mais il est écrit dans une langue mystérieuse avec des dessins étranges. Sur quoi se concentre ton regard ?</p>
+            <label for="q4-h1" class="btn">Sur les mots et les textes. Je cherche dans ma mémoire tout ce que j'ai lu.</label>
+            <label for="q4-h2" class="btn">Sur les couleurs et les petits détails du dessin.</label></div>
+
+        <div class="step" id="step-4i"><p>Tu as la pièce en main, mais elle doit être ajustée au millimètre près pour ne pas déclencher l'alarme. Comment termines-tu le travail ?</p>
+            <label for="q4-i1" class="btn">J'ajuste le mécanisme en calculant l'angle parfait grâce au nombre d'or.</label>
+            <label for="q4-i2" class="btn">J'utilise mes doigts avec une rapidité extrême, comme si je maniais un fil de soie.</label></div>
+
+        <div class="step" id="step-4j"><p>Le coffre est ouvert ! Mais une odeur suspecte s'en échappe et des gardes approchent. Quel est ton dernier tour dans ton sac ?</p>
+            <label for="q4-j1" class="btn">Je prépare instantanément un parfum délicat pour endormir les gardes.</label>
+            <label for="q4-j2" class="btn">Je remplace le vrai dossier par un faux document imité à la perfection.</label></div>
+
+        <div class="step" id="step-4k"><p>Le garde commence à avoir des doutes, il te demande de lui montrer tes papiers pour entrer. Comment gagnes-tu sa confiance ?</p>
+            <label for="q4-k1" class="btn">Je lui sors un laissez-passer officiel avec une signature imitée.</label>
+            <label for="q4-k2" class="btn">Je lui parle avec une voix mélodieuse et un rythme élégant.</label></div>
+
+        <div class="step" id="step-4l"><p>Tu as réussi ton acrobatie et tu as le dossier en main, mais l'alarme se déclenche ! Les gardes arrivent de partout. Comment disparais-tu ?</p>
+            <label for="q4-l1" class="btn">Une perruque, une moustache et un changement de voix : je deviens quelqu'un d'autre.</label>
+            <label for="q4-l2" class="btn">Je réalise un mouvement d'une souplesse incroyable pour me fondre dans les ombres.</label></div>
+
+        <div class="step" id="step-4m"><p>Grâce à tes outils, tu as repéré une zone fragile dans le mur qui bloque le couloir. Mais pour passer, il faut agir vite avant que les gardes ne fassent leur ronde. Quel est ton style ?</p>
+            <label for="q4-m1" class="btn">Je prends mon burin et mon marteau : je taille une ouverture parfaite.</label>
+            <label for="q4-m2" class="btn">Je récupère les planches de bois et les décombres pour construire une passerelle.</label></div>
 
         <div class="result" id="res-carbone">
             <h2>Agent CARBONE</h2><span class="animal-meta">Chouette.</span>
-            <div class="description-text">C’est la tête pensante du Réseau C14. Elle connaît son environnement par cœur et avance ses pions avec stratégie.</div>
+            <div class="description-text">Tête pensante du Réseau C14. Elle connaît son environnement par cœur et avance ses pions avec stratégie.</div>
             <div class="reset-container"><button type="reset" class="reset-link">Retour au début</button></div>
         </div>
 
