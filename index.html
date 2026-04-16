@@ -2,139 +2,157 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Réseau C14 - Quel Agent es-tu ?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Réseau C14 - Recrutement</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .quiz-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 { color: #2c3e50; font-size: 1.5rem; margin-bottom: 25px; }
-        p { color: #7f8c8d; line-height: 1.6; }
-
-        .btn {
-            display: block;
-            background-color: #34495e;
-            color: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn:hover { background-color: #e67e22; }
+        /* --- DESIGN GLOBAL --- */
+        body { font-family: 'Courier New', Courier, monospace; background: #1a1a1a; color: #e0e0e0; display: flex; justify-content: center; padding: 20px; }
+        .quiz-container { background: #262626; padding: 30px; border: 2px solid #e67e22; border-radius: 10px; max-width: 600px; width: 100%; text-align: center; box-shadow: 0 0 20px rgba(230, 126, 34, 0.2); }
+        h1 { color: #e67e22; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 25px; }
+        
+        /* --- BOUTONS --- */
+        .btn { display: block; background: #333; color: #e67e22; padding: 15px; margin: 10px 0; border: 1px solid #e67e22; border-radius: 5px; cursor: pointer; transition: 0.3s; text-decoration: none; }
+        .btn:hover { background: #e67e22; color: #fff; box-shadow: 0 0 10px #e67e22; }
 
         /* --- LOGIQUE SPAGHETTI (CSS) --- */
+        .step, .result { display: none; } /* Cache tout */
+        #step-1 { display: block; } /* Affiche Q1 au départ */
 
-        /* 1. On cache toutes les étapes et résultats par défaut */
-        .step, .result { display: none; }
+        /* Masquage des étapes précédentes au clic */
+        input:checked ~ .step { display: none; }
 
-        /* 2. On affiche l'étape 1 au lancement */
-        #step-1 { display: block; }
+        /* BRANCHE A (OMBRE) */
+        #q1-a:checked ~ #step-2a { display: block; }
+        #q1-a:checked ~ #q2a-1:checked ~ #step-3c { display: block; }
+        #q1-a:checked ~ #q2a-2:checked ~ #step-3d { display: block; }
+        #q1-a:checked ~ #q2a-1:checked ~ #q3c-1:checked ~ #step-4g { display: block; }
+        #q1-a:checked ~ #q2a-1:checked ~ #q3c-2:checked ~ #step-4h { display: block; }
+        #q1-a:checked ~ #q2a-2:checked ~ #q3d-1:checked ~ #step-4i { display: block; }
+        #q1-a:checked ~ #q2a-2:checked ~ #q3d-2:checked ~ #step-4j { display: block; }
 
-        /* 3. Navigation Branche B (Éclat) */
-        #q1-eclat:checked ~ #step-1 { display: none; }
-        #q1-eclat:checked ~ #step-2b { display: block; }
+        /* BRANCHE B (ECLAT) */
+        #q1-b:checked ~ #step-2b { display: block; }
+        #q1-b:checked ~ #q2b-1:checked ~ #step-3e { display: block; }
+        #q1-b:checked ~ #q2b-2:checked ~ #step-3f { display: block; }
+        #q1-b:checked ~ #q2b-1:checked ~ #q3e-1:checked ~ #step-4k { display: block; }
+        #q1-b:checked ~ #q2b-1:checked ~ #q3e-2:checked ~ #step-4l { display: block; }
+        #q1-b:checked ~ #q2b-2:checked ~ #q3f-1:checked ~ #step-4m { display: block; }
 
-        /* 4. Navigation vers la Scène (3E) */
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #step-2b { display: none; }
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #step-3e { display: block; }
-
-        /* 5. Navigation vers le Chantier (3F) */
-        #q1-eclat:checked ~ #q2b-chantier:checked ~ #step-2b { display: none; }
-        #q1-eclat:checked ~ #q2b-chantier:checked ~ #step-3f { display: block; }
-
-        /* 6. RÉSULTAT CARDAMOME (Le raccourci de la question 3F) */
-        #q1-eclat:checked ~ #q2b-chantier:checked ~ #q3f-pause:checked ~ #step-3f { display: none; }
-        #q1-eclat:checked ~ #q2b-chantier:checked ~ #q3f-pause:checked ~ #res-cardamome { display: block; }
-
-        /* 7. RÉSULTAT CADENCE (Ton profil : Branche E -> Choix K) */
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #step-3e { display: none; }
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #step-4k { display: block; }
+        /* RESULTATS FINAUX (14 AGENTS) */
+        #q3c-1:checked ~ #q4g-1:checked ~ #res-carbone { display: block; }
+        #q3c-1:checked ~ #q4g-2:checked ~ #res-cinetique { display: block; }
+        #q3c-2:checked ~ #q4h-1:checked ~ #res-corpus { display: block; }
+        #q3c-2:checked ~ #q4h-2:checked ~ #res-cinquecento { display: block; }
+        #q3d-1:checked ~ #q4i-1:checked ~ #res-cronos { display: block; }
+        #q3d-1:checked ~ #q4i-2:checked ~ #res-cachemire { display: block; }
+        #q3d-2:checked ~ #q4j-1:checked ~ #res-chrysopee { display: block; }
+        #q3d-2:checked ~ #q4j-2:checked ~ #res-cuivre-a { display: block; }
         
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #q4k-voix:checked ~ #step-4k { display: none; }
-        #q1-eclat:checked ~ #q2b-scene:checked ~ #q3e-parle:checked ~ #q4k-voix:checked ~ #res-cadence { display: block; }
+        #q3e-1:checked ~ #q4k-1:checked ~ #res-cuivre-b { display: block; }
+        #q3e-1:checked ~ #q4k-2:checked ~ #res-cadence { display: block; }
+        #q3e-2:checked ~ #q4l-1:checked ~ #res-catharsis { display: block; }
+        #q3e-2:checked ~ #q4l-2:checked ~ #res-cabriole { display: block; }
+        
+        #q3f-1:checked ~ #q4m-1:checked ~ #res-cariatide { display: block; }
+        #q3f-1:checked ~ #q4m-2:checked ~ #res-colombage { display: block; }
+        #q3f-2:checked ~ #res-cardamome { display: block; }
 
-        /* Ajoute tes autres branches (Ombre) sur le même modèle... */
-
+        .result { border: 2px dashed #e67e22; padding: 20px; background: #333; }
+        .result h2 { color: #fff; margin-top: 0; }
     </style>
 </head>
 <body>
 
 <div class="quiz-container">
-    <h1>🕵️‍♂️ Mission : Le Dossier Fantôme</h1>
+    <h1>Réseau C14 : Identification</h1>
 
-    <input type="radio" name="q1" id="q1-ombre" hidden>
-    <input type="radio" name="q1" id="q1-eclat" hidden>
-
-    <input type="radio" name="q2b" id="q2b-scene" hidden>
-    <input type="radio" name="q2b" id="q2b-chantier" hidden>
-
-    <input type="radio" name="q3e" id="q3e-parle" hidden>
-    <input type="radio" name="q3e" id="q3e-acro" hidden>
-
-    <input type="radio" name="q3f" id="q3f-outil" hidden>
-    <input type="radio" name="q3f" id="q3f-pause" hidden>
-
-    <input type="radio" name="q4k" id="q4k-voix" hidden>
-    <input type="radio" name="q4k" id="q4k-sign" hidden>
+    <input type="radio" name="q1" id="q1-a" hidden> <input type="radio" name="q1" id="q1-b" hidden>
+    <input type="radio" name="q2a" id="q2a-1" hidden> <input type="radio" name="q2a" id="q2a-2" hidden>
+               <input type="radio" name="q2b" id="q2b-1" hidden> <input type="radio" name="q2b" id="q2b-2" hidden>
+    <input type="radio" name="q3c" id="q3c-1" hidden> <input type="radio" name="q3c" id="q3c-2" hidden>
+               <input type="radio" name="q3d" id="q3d-1" hidden> <input type="radio" name="q3d" id="q3d-2" hidden>
+               <input type="radio" name="q3e" id="q3e-1" hidden> <input type="radio" name="q3e" id="q3e-2" hidden>
+               <input type="radio" name="q3f" id="q3f-1" hidden> <input type="radio" name="q3f" id="q3f-2" hidden>
+    <input type="radio" name="q4g" id="q4g-1" hidden> <input type="radio" name="q4g" id="q4g-2" hidden>
+               <input type="radio" name="q4h" id="q4h-1" hidden> <input type="radio" name="q4h" id="q4h-2" hidden>
+               <input type="radio" name="q4i" id="q4i-1" hidden> <input type="radio" name="q4i" id="q4i-2" hidden>
+               <input type="radio" name="q4j" id="q4j-1" hidden> <input type="radio" name="q4j" id="q4j-2" hidden>
+               <input type="radio" name="q4k" id="q4k-1" hidden> <input type="radio" name="q4k" id="q4k-2" hidden>
+               <input type="radio" name="q4l" id="q4l-1" hidden> <input type="radio" name="q4l" id="q4l-2" hidden>
+               <input type="radio" name="q4m" id="q4m-1" hidden> <input type="radio" name="q4m" id="q4m-2" hidden>
 
     <div class="step" id="step-1">
-        <p>L'alerte vient de tomber ! Un mystérieux dossier a été volé. Quelle est ta première réaction ?</p>
-        <label for="q1-ombre" class="btn">Analyser les plans (Ombre)</label>
-        <label for="q1-eclat" class="btn">Aller sur le terrain (Éclat)</label>
+        <p>L'alerte tombe ! Quel est ton premier réflexe ?</p>
+        <label for="q1-a" class="btn">Analyser les plans en secret (Ombre)</label>
+        <label for="q1-b" class="btn">Partir sur le terrain interroger (Éclat)</label>
+    </div>
+
+    <div class="step" id="step-2a">
+        <p>La porte secrète est verrouillée. Que fais-tu ?</p>
+        <label for="q2a-1" class="btn">Chercher un levier ou un code caché</label>
+        <label for="q2a-2" class="btn">Forcer le mécanisme avec mes outils</label>
     </div>
 
     <div class="step" id="step-2b">
-        <p>Le musée est bondé de visiteurs et de gardes. Comment entres-tu ?</p>
-        <label for="q2b-scene" class="btn">Faire une performance pour captiver la foule</label>
-        <label for="q2b-chantier" class="btn">Passer par l'échafaudage du chantier</label>
+        <p>Le musée est bondé de gardes. Comment entres-tu ?</p>
+        <label for="q2b-1" class="btn">Faire une performance pour captiver la foule</label>
+        <label for="q2b-2" class="btn">Passer par l'échafaudage du chantier</label>
+    </div>
+
+    <div class="step" id="step-3c">
+        <p>Un bruit suspect dans les archives !</p>
+        <label for="q3c-1" class="btn">Se cacher dans le noir pour suivre le suspect</label>
+        <label for="q3c-2" class="btn">Examiner les parchemins pour trouver un indice</label>
+    </div>
+    <div class="step" id="step-3d">
+        <p>Le mécanisme est cassé. Quelle est ta méthode ?</p>
+        <label for="q3d-1" class="btn">Réparer la pièce avec précision</label>
+        <label for="q3d-2" class="btn">Utiliser une potion ou un faux badge</label>
     </div>
 
     <div class="step" id="step-3e">
-        <p>Un garde te barre la route vers la salle du dossier. Comment le neutralises-tu ?</p>
-        <label for="q3e-parle" class="btn">Je l'embrouille en lui parlant</label>
-        <label for="q3e-acro" class="btn">Je tente une acrobatie au-dessus de lui</label>
+        <p>Un garde te barre la route. Neutralisation ?</p>
+        <label for="q3e-1" class="btn">L'embrouiller par la parole</label>
+        <label for="q3e-2" class="btn">Faire une acrobatie pour passer au-dessus</label>
     </div>
-
     <div class="step" id="step-3f">
-        <p>Le couloir est bloqué par des décombres. Que fais-tu ?</p>
-        <label for="q3f-outil" class="btn">Je sors mes outils pour analyser le mur</label>
-        <label for="q3f-pause" class="btn">Je vois un panier de provisions... pause goûter !</label>
+        <p>Le couloir est bloqué par des décombres.</p>
+        <label for="q3f-1" class="btn">Analyser la structure pour passer</label>
+        <label for="q3f-2" class="btn">Pause gourmande avant de continuer !</label>
     </div>
 
-    <div class="step" id="step-4k">
-        <p>Le garde te demande tes papiers. Comment gagnes-tu sa confiance ?</p>
-        <label for="q4k-voix" class="btn">Je lui parle avec une voix mélodieuse et assurée</label>
-        <label for="q4k-sign" class="btn">Je lui montre un faux laissez-passer</label>
-    </div>
+    <div class="step" id="step-4g"><p>Dernier choix : Ta plus grande qualité ?</p>
+        <label for="q4g-1" class="btn">La patience infinie</label><label for="q4g-2" class="btn">L'art de l'illusion</label></div>
+    <div class="step" id="step-4h"><p>Comment lis-tu un secret ?</p>
+        <label for="q4h-1" class="btn">En déchiffrant les mots</label><label for="q4h-2" class="btn">En observant les images</label></div>
+    <div class="step" id="step-4i"><p>Ton style de création ?</p>
+        <label for="q4i-1" class="btn">L'invention mathématique</label><label for="q4i-2" class="btn">Le tissage de la soie</label></div>
+    <div class="step" id="step-4j"><p>Ta spécialité secrète ?</p>
+        <label for="q4j-1" class="btn">Les parfums et potions</label><label for="q4j-2" class="btn">La ruse et les faux papiers</label></div>
+    <div class="step" id="step-4k"><p>Comment convaincs-tu le garde ?</p>
+        <label for="q4k-1" class="btn">Une signature imitée</label><label for="q4k-2" class="btn">Une voix envoûtante</label></div>
+    <div class="step" id="step-4l"><p>L'alarme sonne ! Fuite ?</p>
+        <label for="q4l-1" class="btn">Se déguiser instantanément</label><label for="q4l-2" class="btn">Disparaître avec agilité</label></div>
+    <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p>
+        <label for="q4m-1" class="btn">En sculptant la pierre</label><label for="q4m-2" class="btn">En réorganisant l'espace</label></div>
 
-    <div class="result" id="res-cadence">
-        <h2 style="color: #e67e22;">✨ Tu es l'Agent CADENCE ! ✨</h2>
-        <p>Le coucou charmeur. Tu courtises avec élégance au rythme de ta parole.</p>
-    </div>
+    <div class="result" id="res-carbone"><h2>Agent CARBONE</h2><p>La chouette stratège.</p></div>
+    <div class="result" id="res-cinetique"><h2>Agent CINÉTIQUE</h2><p>La chauve-souris des images.</p></div>
+    <div class="result" id="res-corpus"><h2>Agent CORPUS</h2><p>La loutre savante.</p></div>
+    <div class="result" id="res-cinquecento"><h2>Agent CINQUECENTO</h2><p>L'aigle photographe.</p></div>
+    <div class="result" id="res-cronos"><h2>Agent CRONOS</h2><p>Le renard inventeur.</p></div>
+    <div class="result" id="res-cachemire"><h2>Agent CACHEMIRE</h2><p>La tarentule couturière.</p></div>
+    <div class="result" id="res-chrysopee"><h2>Agent CHRYSOPÉE</h2><p>L'abeille des essences.</p></div>
+    <div class="result" id="res-cuivre-a"><h2>Agent CUIVRE</h2><p>Le caméléon faussaire.</p></div>
+    <div class="result" id="res-cuivre-b"><h2>Agent CUIVRE</h2><p>Le caméléon infiltré.</p></div>
+    <div class="result" id="res-cadence"><h2>Agent CADENCE</h2><p>Le coucou mélodieux.</p></div>
+    <div class="result" id="res-catharsis"><h2>Agent CATHARSIS</h2><p>Le serpent caméléon.</p></div>
+    <div class="result" id="res-cabriole"><h2>Agent CABRIOLE</h2><p>La raie manta gracieuse.</p></div>
+    <div class="result" id="res-cariatide"><h2>Agent CARIATIDE</h2><p>Le pivert sculpteur.</p></div>
+    <div class="result" id="res-colombage"><h2>Agent COLOMBAGE</h2><p>La souris architecte.</p></div>
+    <div class="result" id="res-cardamome"><h2>Agent CARDAMOME</h2><p>Le panda gourmet. (Fin de mission !)</p></div>
 
-    <div class="result" id="res-cardamome">
-        <h2 style="color: #e67e22;">✨ Tu es l'Agent CARDAMOME ! ✨</h2>
-        <p>Le panda gourmet. Pourquoi stresser quand on peut manger ?</p>
-    </div>
-
-    <p style="margin-top: 30px; font-size: 0.8rem;">Réseau C14 - Section Jeunesse</p>
 </div>
-
 </body>
 </html>
