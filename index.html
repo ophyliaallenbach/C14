@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réseau C14 - Dossier d'Identification</title>
     <style>
-        /* --- STYLE "DOSSIER CONFIDENTIEL" --- */
+        /* --- Style --- */
         body { 
             background-color: #e5e5e5; /* Fond gris neutre */
             background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
@@ -16,19 +16,16 @@
             justify-content: center; 
             padding: 20px; 
         }
-
         .folder {
-            background-color: #e8dcc4; /* Couleur papier Kraft / Vieille chemise */
+            background-color: #e8dcc4; 
             max-width: 650px;
             width: 100%;
             padding: 40px;
-            border-left: 15px solid #c4a484; /* Bordure dossier */
+            border-left: 15px solid #c4a484;
             box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
             position: relative;
             min-height: 500px;
         }
-
-        /* En-tête type dossier officiel */
         .header {
             border-bottom: 2px solid #2d2d2d;
             margin-bottom: 30px;
@@ -37,7 +34,6 @@
             justify-content: space-between;
             align-items: center;
         }
-
         .header h1 { margin: 0; font-size: 1.2rem; text-transform: uppercase; }
         .confidential-stamp {
             color: #b22222;
@@ -72,14 +68,12 @@
 
         .btn::before { content: "[ ] "; }
 
-        /* --- LOGIQUE DU QUIZ --- */
         .step, .result { display: none; }
         #step-1 { display: block; }
 
         /* Masquage automatique au clic */
         input:checked ~ .step { display: none; }
 
-        /* Affichage des étapes selon le tableau Excel */
         #q1-a:checked ~ #step-2a, #q1-b:checked ~ #step-2b { display: block; }
         #q2a-1:checked ~ #step-3c, #q2a-2:checked ~ #step-3d { display: block; }
         #q2b-1:checked ~ #step-3e, #q2b-2:checked ~ #step-3f { display: block; }
@@ -88,7 +82,7 @@
         #q3e-1:checked ~ #step-4k, #q3e-2:checked ~ #step-4l { display: block; }
         #q3f-1:checked ~ #step-4m { display: block; }
 
-        /* Résultats Finaux */
+        /* Résultats */
         #q4g-1:checked ~ #res-carbone, #q4g-2:checked ~ #res-cinetique { display: block; }
         #q4h-1:checked ~ #res-corpus, #q4h-2:checked ~ #res-cinquecento { display: block; }
         #q4i-1:checked ~ #res-cronos, #q4i-2:checked ~ #res-cachemire { display: block; }
@@ -98,11 +92,10 @@
         #q4m-1:checked ~ #res-cariatide, #q4m-2:checked ~ #res-colombage { display: block; }
         #q3f-2:checked ~ #res-cardamome { display: block; }
 
-        /* --- STYLE CARTE AGENT (Le Résultat) --- */
         .result {
             border: 4px solid #2d2d2d;
             padding: 20px;
-            background: #fdfaf0; /* Papier blanc cassé */
+            background: #fdfaf0; 
             position: relative;
         }
 
@@ -144,8 +137,8 @@
 
     <div class="step" id="step-1">
         <p>PROCÉDURE D'URGENCE : Le dossier fantôme a été dérobé. Quelle est votre approche prioritaire ?</p>
-        <label for="q1-a" class="btn">ANALYSE : Je me concentre sur les plans et les archives.</label>
-        <label for="q1-b" class="btn">ACTION : Je pars immédiatement sur le terrain.</label>
+        <label for="q1-a" class="btn">Je me concentre sur les plans et les archives.</label>
+        <label for="q1-b" class="btn">Je pars immédiatement sur le terrain.</label>
     </div>
 
     <div class="step" id="step-2a">
