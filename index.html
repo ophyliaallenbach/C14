@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réseau C14 - Dossier d'Identification Agent</title>
+    <title>Réseau C14 // Dossier d'Identification Agent</title>
     <style>
-
+        /* mise en forme */
         body { 
             background-color: #d1d1d1; 
             background-image: radial-gradient(#afafaf 1px, transparent 1px);
@@ -19,13 +19,13 @@
 
         .folder {
             background-color: #e8dcc4;
-            max-width: 650px;
+            max-width: 700px;
             width: 100%;
             padding: 40px;
             border-left: 20px solid #c4a484; 
             box-shadow: 15px 15px 0px rgba(0,0,0,0.2);
             position: relative;
-            min-height: 550px;
+            min-height: 600px;
         }
 
         .header {
@@ -51,7 +51,7 @@
 
         p { font-size: 1.1rem; line-height: 1.4; font-weight: bold; margin-bottom: 25px; }
 
-        /* Boutons */
+        /* Bouton */
         .btn {
             display: block;
             background: rgba(0,0,0,0.03);
@@ -71,22 +71,23 @@
         }
 
         .btn::before { content: "- [ ] "; }
+
+        /* Logique du quizz */
         .step, .result { display: none; }
         #step-1 { display: block; }
+
         input:checked ~ .step { display: none; }
 
-        /* Branchements Branche 1 & 2 */
         #q1-a:checked ~ #step-2a, #q1-b:checked ~ #step-2b { display: block; }
         #q2a-c:checked ~ #step-3c, #q2a-d:checked ~ #step-3d { display: block; }
         #q2b-e:checked ~ #step-3e, #q2b-f:checked ~ #step-3f { display: block; }
         
-        /* Branchements Étape 3 vers 4 */
         #q3c-g:checked ~ #step-4g, #q3c-h:checked ~ #step-4h { display: block; }
         #q3d-i:checked ~ #step-4i, #q3d-j:checked ~ #step-4j { display: block; }
         #q3e-k:checked ~ #step-4k, #q3e-l:checked ~ #step-4l { display: block; }
         #q3f-m:checked ~ #step-4m { display: block; }
 
-        /* Résultats */
+        /* Affichage des résultats */
         #q4g-1:checked ~ #res-carbone, #q4g-2:checked ~ #res-cinetique { display: block; }
         #q4h-1:checked ~ #res-corpus, #q4h-2:checked ~ #res-cinquecento { display: block; }
         #q4i-1:checked ~ #res-cronos, #q4i-2:checked ~ #res-cachemire { display: block; }
@@ -95,15 +96,35 @@
         #q4l-1:checked ~ #res-catharsis, #q4l-2:checked ~ #res-cabriole { display: block; }
         #q4m-1:checked ~ #res-cariatide, #q4m-2:checked ~ #res-colombage { display: block; }
         #q3f-pause:checked ~ #res-cardamome { display: block; }
-        
+
+        /* Resultat*/
         .result {
             border: 5px double #2d2d2d;
             padding: 30px;
             background: #fdfaf0; 
             box-shadow: 5px 5px 0px rgba(0,0,0,0.1);
         }
-        .result h2 { color: #b22222; text-transform: uppercase; margin-top: 0; border-bottom: 2px solid #b22222; padding-bottom: 10px; }
-        .result p { font-weight: normal; font-style: italic; }
+        .result h2 { 
+            color: #b22222; 
+            text-transform: uppercase; 
+            margin-top: 0; 
+            border-bottom: 2px solid #b22222; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem;
+        }
+        .animal-meta {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: block;
+        }
+        .description-text {
+            font-weight: normal;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
 
     </style>
 </head>
@@ -111,8 +132,8 @@
 
 <div class="folder">
     <div class="header">
-        <h1>RESEAU C14 // PROJET LOLO</h1>
-        <div class="stamp">IDENTIFICATION</div>
+        <h1>RESEAU C14 // DOSSIER IDENTIFICATION</h1>
+        <div class="stamp">TERMINÉ</div>
     </div>
 
     <input type="radio" name="q1" id="q1-a" hidden> <input type="radio" name="q1" id="q1-b" hidden>
@@ -131,69 +152,138 @@
     <input type="radio" name="q4" id="q4m-1" hidden> <input type="radio" name="q4" id="q4m-2" hidden>
 
     <div class="step" id="step-1">
-        <p>L'alerte vient de tomber ! Un mystérieux dossier a été volé. Le directeur du Réseau te confie la mission. Quelle est ta première réaction ?</p>
-        <label for="q1-a" class="btn">Je m'isole avec mon carnet pour analyser les plans et trouver une faille.</label>
-        <label for="q1-b" class="btn">Je saute dans mon costume et je pars interroger les témoins sur place.</label>
+        <p>L'alerte vient de tomber ! Un mystérieux dossier a été volé. Quelle est ta première réaction ?</p>
+        <label for="q1-a" class="btn">Je m'isole avec mon carnet pour analyser les plans.</label>
+        <label for="q1-b" class="btn">Je saute dans mon costume et je pars interroger les témoins.</label>
     </div>
 
     <div class="step" id="step-2a">
         <p>La porte secrète de la bibliothèque est verrouillée. Que fais-tu ?</p>
-        <label for="q2a-c" class="btn">Je cherche un levier caché ou un message codé dans les vieux livres.</label>
-        <label for="q2a-d" class="btn">Je sors ma trousse à outils ou mes produits chimiques pour forcer le verrou.</label>
+        <label for="q2a-c" class="btn">Je cherche un levier caché ou un message codé.</label>
+        <label for="q2a-d" class="btn">Je sors ma trousse à outils pour forcer le verrou.</label>
     </div>
 
     <div class="step" id="step-2b">
-        <p>Il y a une foule de visiteurs et des gardes partout au musée. Comment entres-tu ?</p>
-        <label for="q2b-e" class="btn">Je monte sur une estrade et je fais une performance pour captiver la foule.</label>
-        <label for="q2b-f" class="btn">Je repère une zone en travaux et j'utilise un échafaudage pour entrer par les hauteurs.</label>
+        <p>Le musée est bondé de visiteurs et de gardes. Comment entres-tu ?</p>
+        <label for="q2b-e" class="btn">Je fais une performance pour captiver la foule.</label>
+        <label for="q2b-f" class="btn">J'utilise un échafaudage pour entrer par les hauteurs.</label>
     </div>
 
     <div class="step" id="step-3c">
         <p>Un bruit suspect dans les archives ! Que décides-tu ?</p>
-        <label for="q3c-g" class="btn">Je me cache dans le noir pour suivre l'ombre du suspect sans bruit.</label>
-        <label for="q3c-h" class="btn">J'examine les parchemins sur le bureau pour trouver un indice écrit.</label>
+        <label for="q3c-g" class="btn">Je me cache dans le noir pour suivre le suspect.</label>
+        <label for="q3c-h" class="btn">J'examine les parchemins pour trouver un indice.</label>
     </div>
 
     <div class="step" id="step-3d">
         <p>Le mécanisme d'accès est cassé. Quelle est ta méthode ?</p>
-        <label for="q3d-i" class="btn">Je répare la pièce manquante du mécanisme avec mes mains.</label>
-        <label for="q3d-j" class="btn">J'utilise un faux badge ou une potion pour tromper le système.</label>
+        <label for="q3d-i" class="btn">Je répare la pièce manquante avec mes mains.</label>
+        <label for="q3d-j" class="btn">J'utilise un faux badge ou une potion de ruse.</label>
     </div>
 
     <div class="step" id="step-3e">
-        <p>Un garde te barre la route vers la salle du dossier. Comment le neutralises-tu ?</p>
+        <p>Un garde vous barre la route. Comment le neutralisez-vous ?</p>
         <label for="q3e-k" class="btn">Je l'embrouille en lui parlant pour le déstabiliser.</label>
         <label for="q3e-l" class="btn">Je fais une acrobatie pour passer au-dessus de lui.</label>
     </div>
 
     <div class="step" id="step-3f">
-        <p>Le couloir est bloqué par des décombres. Quelle est l'option choisie ?</p>
-        <label for="q3f-m" class="btn">Je sors mes outils pour analyser la structure du bâtiment.</label>
-        <label for="q3f-pause" class="btn">Je vois un panier de provisions... une pause gourmande avant de continuer !</label>
+        <p>Le couloir est bloqué par des décombres. Quelle est l'option ?</p>
+        <label for="q3f-m" class="btn">J'analyse la structure pour trouver une faille.</label>
+        <label for="q3f-pause" class="btn">Une pause gourmande avant de finir la mission !</label>
     </div>
 
-    <div class="step" id="step-4g"><p>Dernier choix : ta plus grande force ?</p><label for="q4g-1" class="btn">La patience infinie</label><label for="q4g-2" class="btn">L'art de l'illusion</label></div>
-    <div class="step" id="step-4h"><p>Comment déchiffres-tu un secret ?</p><label for="q4h-1" class="btn">En déchiffrant les mots</label><label for="q4h-2" class="btn">En observant les images et couleurs</label></div>
-    <div class="step" id="step-4i"><p>Ton style de création ?</p><label for="q4i-1" class="btn">L'invention mathématique</label><label for="q4i-2" class="btn">Le travail du fil de soie</label></div>
-    <div class="step" id="step-4j"><p>Ta spécialité secrète ?</p><label for="q4j-1" class="btn">Les potions et essences</label><label for="q4j-2" class="btn">La falsification de documents</label></div>
-    <div class="step" id="step-4k"><p>Le garde demande tes papiers. Ta réaction ?</p><label for="q4k-1" class="btn">Je montre une signature imitée</label><label for="q4k-2" class="btn">Je parle avec une voix assurée</label></div>
-    <div class="step" id="step-4l"><p>L'alarme sonne ! Comment disparais-tu ?</p><label for="q4l-1" class="btn">Je change d'identité (perruque...)</label><label for="q4l-2" class="btn">Je me fonds dans les ombres</label></div>
-    <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p><label for="q4m-1" class="btn">En sculptant la pierre</label><label for="q4m-2" class="btn">En construisant un passage</label></div>
+    <div class="step" id="step-4g"><p>Ta plus grande force ?</p><label for="q4g-1" class="btn">Patience infinie</label><label for="q4g-2" class="btn">Art de l'illusion</label></div>
+    <div class="step" id="step-4h"><p>Comment déchiffres-tu un secret ?</p><label for="q4h-1" class="btn">Les mots écrits</label><label for="q4h-2" class="btn">Les images et couleurs</label></div>
+    <div class="step" id="step-4i"><p>Ton style de création ?</p><label for="q4i-1" class="btn">Invention mathématique</label><label for="q4i-2" class="btn">Travail de la soie</label></div>
+    <div class="step" id="step-4j"><p>Ta spécialité ?</p><label for="q4j-1" class="btn">Potions et essences</label><label for="q4j-2" class="btn">Contrefaçon</label></div>
+    <div class="step" id="step-4k"><p>Dernier face-à-face :</p><label for="q4k-1" class="btn">Signature imitée</label><label for="q4k-2" class="btn">Voix assurée</label></div>
+    <div class="step" id="step-4l"><p>Fuite spectaculaire :</p><label for="q4l-1" class="btn">Changer d'identité</label><label for="q4l-2" class="btn">Disparaître avec agilité</label></div>
+    <div class="step" id="step-4m"><p>Comment libères-tu la voie ?</p><label for="q4m-1" class="btn">En sculptant la pierre</label><label for="q4m-2" class="btn">En réorganisant l'espace</label></div>
 
-    <div class="result" id="res-carbone"><h2>Agent CARBONE</h2><p>La chouette stratège.</p></div>
-    <div class="result" id="res-cinetique"><h2>Agent CINÉTIQUE</h2><p>La chauve-souris des images.</p></div>
-    <div class="result" id="res-corpus"><h2>Agent CORPUS</h2><p>La loutre savante.</p></div>
-    <div class="result" id="res-cinquecento"><h2>Agent CINQUECENTO</h2><p>L'aigle photographe.</p></div>
-    <div class="result" id="res-cronos"><h2>Agent CRONOS</h2><p>Le renard inventeur.</p></div>
-    <div class="result" id="res-cachemire"><h2>Agent CACHEMIRE</h2><p>La tarentule couturière.</p></div>
-    <div class="result" id="res-chrysopee"><h2>Agent CHRYSOPÉE</h2><p>L'abeille des essences.</p></div>
-    <div class="result" id="res-cuivre"><h2>Agent CUIVRE</h2><p>Le caméléon faussaire.</p></div>
-    <div class="result" id="res-cadence"><h2>Agent CADENCE</h2><p>Le coucou mélodieux. (C'est ton profil !)</p></div>
-    <div class="result" id="res-catharsis"><h2>Agent CATHARSIS</h2><p>Le serpent aux mille visages.</p></div>
-    <div class="result" id="res-cabriole"><h2>Agent CABRIOLE</h2><p>La raie manta gracieuse.</p></div>
-    <div class="result" id="res-cariatide"><h2>Agent CARIATIDE</h2><p>Le pivert sculpteur.</p></div>
-    <div class="result" id="res-colombage"><h2>Agent COLOMBAGE</h2><p>La souris architecte.</p></div>
-    <div class="result" id="res-cardamome"><h2>Agent CARDAMOME</h2><p>Le panda gourmet. Fin de mission !</p></div>
+    <div class="result" id="res-cabriole">
+        <h2>Agent CABRIOLE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Raie Manta.</span>
+        <div class="description-text">Gracieux et calme, il nage en eaux profondes en solitaire. Il sait se fondre dans le décor et se faire oublier, mais il est toujours au bon endroit au bon moment. Son talent d’enseignant en danse l’a fait voyager à travers le monde. Son corps est d’une souplesse et d’une force sans comparaison.</div>
+    </div>
+
+    <div class="result" id="res-cachemire">
+        <h2>Agent CACHEMIRE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Tarentule.</span>
+        <div class="description-text">C’est comme si elle avait 8 mains avec lesquelles elle manie le fil à coudre à une vitesse et une précision hors norme. Ses doigts assemblent le tout en des vêtements d’une facture étonnante. Visionnaire, elle créé les chapeaux qui sont portés par les nobles, et les robes qui sont portées par les reines.</div>
+    </div>
+
+    <div class="result" id="res-cadence">
+        <h2>Agent CADENCE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Coucou.</span>
+        <div class="description-text">Court sur pattes et très élégant, il courtise avec charme au rythme de sa parole et de ses chansons. Il ne se déplace jamais sans son attirail de appeaux et d’instruments à percussion. Il a l’oreille absolue, maitrise 8 instruments de musique, et sait imiter n’importe quel chant d’oiseau.</div>
+    </div>
+
+    <div class="result" id="res-carbone">
+        <h2>Agent CARBONE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Chouette.</span>
+        <div class="description-text">C’est la tête pensante du Réseau C14. Elle connait son environnement par cœur et avance ses pions avec stratégie. Elle attend, tapie dans l’ombre, puis au moment idéal elle fond sur sa proie, sans un bruit. Clac. Elle est charismatique, organisée et respectée. Sa prestance en fait quelqu’un d’inaccessible mais qui a accès à tout.</div>
+    </div>
+
+    <div class="result" id="res-cardamome">
+        <h2>Agent CARDAMOME</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Panda.</span>
+        <div class="description-text">Il est sympathique et drôle. C’est un bon vivant, attentionné et généreux. Il se déplace avec lenteur, mais lorsqu’il s’agit de nourriture ses mains deviennent étonnamment vives et précises. Venant du bout du monde, il a cultivé son palais de sorte qu’il sait identifier toutes les saveurs, et les marier de la plus belle façon...</div>
+    </div>
+
+    <div class="result" id="res-cariatide">
+        <h2>Agent CARIATIDE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Pivert.</span>
+        <div class="description-text">Elle aime creuser et donner forme à tout ce qui l’entoure. Rien ne reste très longtemps dans son état d’origine lorsqu’elle est dans les parages. Ses mains sont solides et ses bras puissants. Elle a un fort tempérament et est perfectionniste, si bien qu’elle peut mettre plusieurs années avant de finir une sculpture.</div>
+    </div>
+
+    <div class="result" id="res-catharsis">
+        <h2>Agent CATHARSIS</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Serpent.</span>
+        <div class="description-text">Sa capacité à muer est infinie. Aucun rôle ne lui est inaccessible ; elle sait se faire passer pour n’importe qui. Son pouvoir de transformation est incroyable : une soutane et un chapelet, la voilà nonne. Une belle robe et un collier d’améthystes, la voilà reine. Une fausse moustache et un chapeau, la voilà homme...</div>
+    </div>
+
+    <div class="result" id="res-chrysopee">
+        <h2>Agent CHRYSOPÉE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Abeille.</span>
+        <div class="description-text">Il est très sociable, doux léger et délicat. Il est d’une gentillesse à toute épreuve, mais il sait piquer lorsque sa vie est en danger. Il prélève l’essence des fleur, et en fait des parfums délicieux... ou mortels ! La rose et le jasmin sont ses amis, tout autant que la cigüe et le cyanure...</div>
+    </div>
+
+    <div class="result" id="res-cinetique">
+        <h2>Agent CINÉTIQUE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Chauve-souris.</span>
+        <div class="description-text">Son milieux naturel est la nuit. Sa passion ? Les bougies et les images qu’elles projettent... elle est celle qui inventa les premières images animées, à l’aide de jeux de miroirs. Elle est passionnée par le mouvement des oiseaux. Elle sait se faire oublier et surgir lorsqu’on ne s’y attend pas.</div>
+    </div>
+
+    <div class="result" id="res-cinquecento">
+        <h2>Agent CINQUECENTO</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Aigle.</span>
+        <div class="description-text">Ses yeux saisissent les subtilités du monde en un instant : elle voit où sont les ombres et la lumière, les formes, les creux, et perçoit les couleurs avec une précision photographique. Ses mains sont des serres agiles qui savent ensuite reproduire ces images les yeux fermés, avec une rapidité fascinante et une touche artistique étonnante.</div>
+    </div>
+
+    <div class="result" id="res-colombage">
+        <h2>Agent COLOMBAGE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Souris.</span>
+        <div class="description-text">De nature dispersée, il part dans tous les sens. Ses yeux regardent dans une direction, tandis que son corps va dans l’autre, et que ses mains font encore une dernière chose. Plein d’enthousiasme et de gentillesses, son esprit est frétillant. Il est devenu l’un des plus jeunes et brillants architectes de son époque.</div>
+    </div>
+
+    <div class="result" id="res-corpus">
+        <h2>Agent CORPUS</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait une Loutre.</span>
+        <div class="description-text">Elle aime jouer et naviguer dans son environnement naturel : les bibliothèques. Toujours de bon conseil, elle est juste et modérée. Les rares moment où elle voit la lumière du jour sont pour se prélasser au soleil... un livre à la main. Sa sagesse n’a d’égal que ses connaissances encyclopédiques.</div>
+    </div>
+
+    <div class="result" id="res-cronos">
+        <h2>Agent CRONOS</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Renard.</span>
+        <div class="description-text">Malin comme jamais. Tout le temps qu'il ne passe pas à observer, il l'utilise pour inventer des machines sans queues ni tête : une hélice qui souffle avec le vent, une carapace pour se protéger des balles... qui sait ? Un jour cela pourra être utile. Son chiffre préféré est le nombre d’or qu’il applique à toutes ses créations.</div>
+    </div>
+
+    <div class="result" id="res-cuivre">
+        <h2>Agent CUIVRE</h2>
+        <span class="animal-meta">Si c’était un animal, ce serait un Caméléon.</span>
+        <div class="description-text">C’est le disciple de Gutenberg et la dernière recrue, en date, du Réseau. Falsifier est sa passion. Il aime imiter les signatures des riches marchands, les cachets des nobles, dupliquer les documents « officiels »... une compétence qui a sûrement un brillant avenir. Son dicton ? Attrape-moi si tu peux.</div>
+    </div>
 
 </div>
 
